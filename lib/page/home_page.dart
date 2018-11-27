@@ -51,29 +51,17 @@ class _HomePageState extends State<HomePage> {
           Container(
             margin: EdgeInsets.only(bottom: 30.0),
             child: Column(
-              children: <Widget>[
-                Icon(
-                  MyFlutterApp.fire,
-                  size: 100.0,
-                    color: !_sensorData.flame && _sensorData.ppmCo2 > 9000
-                        && _sensorData.ppmMethane > 500 ? Colors.red : Colors.black
-                ),
-                Text(
-                  _sensorData.flame ? 'Kebakaran' : 'Tidak Kebakaran',
-                  style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 20.0,
-                      color: !_sensorData.flame && _sensorData.ppmCo2 > 9000
-                          && _sensorData.ppmMethane > 500 ? Colors.red : Colors.black
-                  ),
-                ),
-              ],
+              children: createFireStatusWidget(_sensorData)
             ),
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
+              Text(
+                'Flame: ${_sensorData.flame}',
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15.0),
+              ),
               Text(
                 'CO2: ${_sensorData.ppmCo2}',
                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15.0),
@@ -117,29 +105,17 @@ class _HomePageState extends State<HomePage> {
           Container(
             margin: EdgeInsets.only(bottom: 30.0),
             child: Column(
-              children: <Widget>[
-                Icon(
-                  MyFlutterApp.fire,
-                  size: 100.0,
-                  color: !sensorData.flame && sensorData.ppmCo2 > 9000
-                      && sensorData.ppmMethane > 500 ? Colors.red : Colors.black
-                ),
-                Text(
-                  sensorDataList.last.flame ? 'Kebakaran' : 'Tidak Kebakaran',
-                  style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 20.0,
-                      color: !sensorData.flame && sensorData.ppmCo2 > 9000
-                          && sensorData.ppmMethane > 500 ? Colors.red : Colors.black
-                  ),
-                ),
-              ],
+              children: createFireStatusWidget(sensorData)
             ),
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
+              Text(
+                'Flame: ${sensorData.flame}',
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15.0),
+              ),
               Text(
                 'CO2: ${sensorData.ppmCo2}',
                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15.0),
@@ -153,5 +129,24 @@ class _HomePageState extends State<HomePage> {
         ],
       ),
     );
+  }
+
+  List<Widget> createFireStatusWidget(SensorData sensorData) {
+    return [
+      Icon(
+          MyFlutterApp.fire,
+          size: 100.0,
+          color: sensorData.ppmCo2 > 5000 ? Colors.red : Colors.black
+      ),
+      Text(
+        sensorData.ppmCo2 > 5000
+            ? 'Kebakaran' : 'Tidak Kebakaran',
+        style: TextStyle(
+            fontWeight: FontWeight.bold,
+            fontSize: 20.0,
+            color: sensorData.ppmCo2 > 5000 ? Colors.red : Colors.black
+        ),
+      ),
+    ];
   }
 }

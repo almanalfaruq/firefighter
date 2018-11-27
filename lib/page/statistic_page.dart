@@ -2,11 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:charts_flutter/flutter.dart';
 import 'package:firefighter/database/db_helper.dart';
 import 'package:firefighter/model/sensor_data.dart';
-import 'package:intl/intl.dart';
+import 'package:firefighter/service/mqtt_client.dart';
 
 class StatisticPage extends StatefulWidget {
+  MqttClientService service;
   DbHelper dbHelper;
-  StatisticPage(this.dbHelper);
+  StatisticPage(this.service,this.dbHelper);
 
   @override
   _StatisticPageState createState() => _StatisticPageState();
@@ -17,7 +18,11 @@ class _StatisticPageState extends State<StatisticPage> {
   DbHelper dbHelper;
   List<Series> series;
 
-  static var formatter = new DateFormat('yyyy-MM-dd\njj:mm:ss');
+  void callback(SensorData sensorData) {
+    if (mounted) {
+      setState(() { });
+    }
+  }
 
   String splitToDateFormat(String dateTimeToSplit) {
     List<String> stringDateTime = dateTimeToSplit.split('T');
@@ -53,6 +58,7 @@ class _StatisticPageState extends State<StatisticPage> {
   @override
   void initState() {
     super.initState();
+    widget.service.setCallback(callback);
     dbHelper = widget.dbHelper;
   }
 

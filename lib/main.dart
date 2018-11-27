@@ -32,6 +32,7 @@ class MyHomePageState extends State<MyHomePage> {
   int _curIndex = 0;
   MqttClientService service;
   HomePage homePage;
+  StatisticPage statisticPage;
 
   @override
   void initState() {
@@ -40,6 +41,7 @@ class MyHomePageState extends State<MyHomePage> {
     service = MqttClientService(dbHelper);
     service.connect();
     homePage = HomePage(service, dbHelper);
+    statisticPage = StatisticPage(service, dbHelper);
   }
 
   @override
@@ -92,7 +94,7 @@ class MyHomePageState extends State<MyHomePage> {
         break;
       default:
         return Container(
-          child: StatisticPage(dbHelper),
+          child: statisticPage,
         );
         break;
     }
